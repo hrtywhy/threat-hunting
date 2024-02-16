@@ -1,2 +1,3 @@
 # threat-hunting
-Cheat Sheet for Threat Hunting
+Cheat Sheet for Threat Hunting. <br>
+Zip passwd *hunting*
