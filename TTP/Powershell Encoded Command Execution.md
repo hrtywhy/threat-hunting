@@ -81,7 +81,19 @@ index=* sourcetype=* process_path="*\\powershell.exe"
 | convert ctime(occurrences) 
 | table occurrences, sourceHost, ProcessCommands, ParentProcesses, Processes
 ```
+- CARBON BLACK
+```
+(process_name:powershell.exe AND cmdline:-e*) AND -cmdline:-noninter*
+```
+- MICROSOFT SENTINEL
+```
+SecurityEvent
+| where TimeGenerated >= ago(7d)
+| project TimeGenerated, Computer, Activity, EventID, CommandLine, NewProcessName, processId = tolong(NewProcessId), ParentProcessName, parentProcessId = tolong(ProcessId)
+| where NewProcessName endswith "powershell.exe"
+| where CommandLine matches regex "-[Ee^]{1,2}[NnCcOoDdEeMmAaPpHh^`]+\\s+\"?[a-zA-Z0-9+/=]{6,}"
+```
 ## References
-https://thedfirreport.com/2023/06/12/a-truly-graceful-wipe-out/
-https://cycraft.com/download/CyCraft-Whitepaper-Chimera_V4.1.pdf
+1. https://thedfirreport.com/2023/06/12/a-truly-graceful-wipe-out/
+2. https://cycraft.com/download/CyCraft-Whitepaper-Chimera_V4.1.pdf
 
